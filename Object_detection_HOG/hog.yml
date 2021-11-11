@@ -1,0 +1,36 @@
+config:
+  input_img: '3.png'
+  model: 'person_detection.joblib'
+  image_pyramid: [128, 140, 150, 160, 180, 200, 220, 240, 256, 300]
+  window_height: 128
+  window_width: 64
+  window_step: 16
+  prob_threshold: 0.9
+  overlap_threshold: 0.4
+
+person_detector:
+  $PersonDetector:
+    input_img: =/config/input_img
+    image_pyramid: =/config/image_pyramid
+    window_step: =/config/window_step
+    window_height: =/config/window_height
+    window_width: =/config/window_width
+    feature_extractor: =/feature_extractor/hog
+    model: =/config/model
+    prob_threshold: =/config/prob_threshold
+    nms: =/nms
+  run(): '__call__'
+
+feature_extractor:
+  hog:
+    $HOG:
+      window_height: =/config/window_height
+      window_width: =/config/window_width
+      cell_size: 8
+      block_size: 2
+      bins: 9
+nms:
+  $NMS:
+    overlap_threshold: =/config/overlap_threshold
+
+
