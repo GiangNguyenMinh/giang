@@ -1,0 +1,57 @@
+- update sudo:
+sudo apt-get update
+sudo apt-get upgrade
+- cài đặt python3:
+sudo apt-get install python3.8
+- cài đặt opencv:
+sudo apt-get install python3-opencv
+- cài đặt kivy:   https://matham-kivy.readthedocs.io/en/latest/installation/installation-linux-venvs.html
++ cài các gói cần thiết
+sudo apt-get install -y \
+    python3-pip \
+    build-essential \
+    git \
+    python3 \
+    python3-dev \
+    ffmpeg \
+    libsdl2-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    libsdl2-ttf-dev \
+    libportmidi-dev \
+    libswscale-dev \
+    libavformat-dev \
+    libavcodec-dev \
+    zlib1g-dev
+sudo apt-get install -y \
+    libgstreamer1.0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good
++ cài đặt cython:
+python3 -m pip install cython
++ cài đặt kivy:
+python3 -m pip install kivy==2.0.0rc3
+- cài đặt buildozer:  https://buildozer.readthedocs.io/en/latest/installation.html
+python3 -m pip install --upgrade buildozer 
+sudo apt install -y git zip unzip openjdk-8-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+sudo vi ~/.bashrc --> điền tiếp dòng export PATH=$PATH:~/.local/bin/ --> cuối file :wq
+- update fill 'tools'
++ tải android studio
+sudo snap install android-studio --classic 
++ install android-studio
+android-studio // start ...
+Home --> Android --> Sdk --> (copy)tools 
+(Hindden ctrl H) --> .buildozer --> android --> platform --> android-sdk --> rename tools to old-tools --> paste tools
+./sdkmanager --install 'tools'
+- run 
+cd <thư mục chứa file python-kivy>
+buildozer init 
+edit file buildozer.spec 
+buildozer -v android debug 
+// cancel --> ctrl C
+// xóa --> buildozer android clean
+*********************************************
+chạy trên điện thoại:
+tải file apk --> cài đặt --> cấp quyển truy cập camera cho app
+
+
