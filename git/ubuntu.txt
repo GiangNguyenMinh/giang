@@ -1,0 +1,80 @@
+*******************cmd**************
+// path directly current 
+pwd : path of current directory 
+
+//list
+ls : list of directory
+ls -a: list all directory (include hinden forder)
+ 
+//change directory 
+cd .. : return parent of current foder 
+cd - : return to directory which is before current directory 
+cd or cd ~: return to /home/username 
+cd <name_directory_child> : return to chid directory of curent directory 
+cd <path> : return to directory in path
+
+//copy 
+cp <name_file><name_directory>: copy a file to a directory 
+cp -r <name_src_directory><name_des_directory> : copy source directory to destination directory 
+
+//move
+mv <name_old_file><name_des_directory/name_new_file>: move file to directory and rename it
+**mv <name_ole_file><name_des_directory>: move file to directory and not rename it
+
+//remove
+rm <file_name>: remove file 
+rm <name_directory>: remove emty directory 
+rm -r <name_directory>: remove directory
+
+//make directory 
+mkdir <name_directory>: make new directory 
+
+//touch 
+touch <name_file>: creat new file 
+
+//man 
+man <name_excution>: help excution
+
+//sudo: run with adminator 
+sudo ...
+sudo shutdown -h now: shut down away 
+sudo reboot: restart computer  
+
+df, df -h: show all file acount of space in hadware
+du -h, -s: show current and child directory acount of space in hardware
+free -h, -g, -m: show acount of RAM free and using 
+top: show inform of system include
+uname -a: show inform of computer
+lsb_release -a: show inform of linux 
+ifconfig: show list device network in computer, can see IP of computer
+adduser<name_user>: add new user for computer
+ping<hostname>
+ps aux
+
+
+
+
+************vim**************
+sudo apt install vim 
+open file using: vim file_name.source
+-----
+**esc - nomarl mode 
+dd - delete 
+u - undo 
+//copy
+   v + arrow - select lines 
+   y - save in yank
+   o - create new line 
+   p - pase 
+-----
+**ctrl: - Command Line 
+:q! or ZQ - exit and not save
+:wq - exit and save
+:set number - set number in line --> :<Number_line> - transport to Number_line 
+:$ - transport to final line 
+-----
+**esc i - insert mode 
+**esc x - delete 
+
+
+

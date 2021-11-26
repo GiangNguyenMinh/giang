@@ -1,0 +1,225 @@
+************opencv*************
+import cv2 as cv 
+.imread(img, 0 or 1 or 2)
+.imshow()
+.waitkey()
+.resize()
+.crop()
+
+A.Cải thiện ảnh
+
+
+
+
+
+a. Miền không gian 
+I - Các phép toán trên điểm ảnh
+1) Đảo ảnh 
+def dao_anh(img):
+   return 255-img
+2) Biến đổi Logarit 
+def Logarit(img, c): 
+   return float(c)*cv.log(1.0+img)
+3) Biến đổi gamma
+def Gamma(img, gamma, c): 
+   return float(c)*pow(img, float(gamma)) // gama tăng ảnh rõ hơn
+4) Cắt ngưỡng 
+def cat_nguong(img, threadhold): --> 1, 0
+   return img > threadhold
+II - Lát cắt mặt phẳng bit --> nén ảnh
+- Chuyển mức xám ảnh về thành nhị phân (biểu diễn theo số bit quy định)
+- Tách ảnh tương ứng với các vị tri bit trong mỗi chuỗi nhị phân 
+- Tái tạo ảnh từ mặt phẳng bit
+def('img.jpg'): 
+   img = cv.imread('img.jpg', 0)
+   lit =[]
+   for i in range(img.shape[0]):
+      for j in range(img.shape[1]):
+          lst.append(np.binary_repr(img[i][j], width=8)) # chuyển các pixel về nhị phân 8 bit
+   mp_bit8 = []
+   for i in lst: 
+      mp_bit8.append(int(i[0])) # tương tự với mp_bit7 i[1] ...
+   img_bit_8 = (np.array(mp_bit8, dtype='uint8')*128).reshape(img.shape[0], img.shape[1])
+   img_bit_7 = (np.array(mp_bit7, dtype='uint8')*64).reshape(img.shape[0], img.shape[1])
+   .
+   .
+   .
+   img_compose = img_bit_8 + img_bit_7 ...
+III - Histogaram
+- rk - giá trị mức xám khác nhau trong ảnh
+- h(rk) - số lượng của mỗi giá trị rk 
+- p(rk) = h(rk)/(M.N) - xác suất của mỗi rk --> histogram ảnh 
+tính sk = (L-1).sum/1->k/(pr(rk)) --> L số mức xám vs 3 bit thì có L = 8
+làm tròn sk sẽ thay cho rk trong ảnh
+cv.equalizaHist(img)
+IV - Lọc 
++++Lọc mịn (lọc thông thấp - tần số thấp đi qua)
+.Tự định nghĩa bộ lọc
+kernel = np.array([[]..])
+cv.filter2D(src=img, ddepth=-1, kernel=kernel)
+
+.Lọc trung bình 
+kernel có kích thước là n thì các phần tử trong ma trận đều là 1/n
+cv.blur(src, ksize=(5, 5))
+
+.Lọc trung bình có trọng số 
+kernel có tổng các phần tử chia trung bình, càng gần trung tâm trọng số càng cao
+
+.Lọc trung vị 
+lấy giá trị ở giữa trong vùng lân cận mà kernel đè lên 
+cv.medianBlur(src,ksize)
+
+.Lọc min
+Lấy giá trị nhỏ nhất trong vùng lân cận mà kernel đè lên
+
+.Lọc max
+Lấy giá trị lớn nhất trong vùng lân cận mà kernel đè lên
+
+.Lọc Gaussian 
+kernel các giá trị phân phối theo hàm Gauss
+cv.GausianBlur(src, ksize, sigmaX, sigmaY) --> sigmaX, sigmaY độ lệch chuẩn theo phương X và Y
+
++++Lọc nét ảnh
+đạo hàm cấp 1: &f(x)/&x = f(x+1)-f(x)
+đạo hàm cấp 2: &2F(x)/&x2 = f(x+1)+f(x-1)-2f(x)
+Gx=&f(x, y)/&x = f(x+1, y)-f(x, y)
+Gy=&f(x, y)/&y = f(x, y+1)-f(x, y)
+Gxx=&2F(x, y)/&x2 = f(x+1, y)+f(x-1, y)-2f(x, y)
+Gyy=&2F(x, y)/&y2 = f(x, y+1)+f(x, y-1)-2f(x, y)
+
+nabla(tốc độ thay đổi giá trị tại (x, y))f(x, y) = sqrt(Gx**2+Gy**2) --> trong lập trình thì nabla = |Gx|+|Gy|
+laplacian = Gxx+Gyy
+- đạo hàm bậc 1 bằng 0 trong vùng mức xám không đổi, khác không tại các vùng biên thoải hoặc nhảy vọt
+- đạo hàm bậc 2 bằng 0 trong vùng mức xám không đổi và vùng biên thoải, khác 0 tại cuối mỗi vùng
+
+.Lọc đạo hàm bậc 1 - Robert
+đường chéo 1:                                                           _________________________
+|Gcross1| = |f(x+1, y+1)-f(x, y)|    -->[[-1, 0], [0, 1]]               | f(x, y)  | f(x+1, y)  |
+đường chéo 2:                                                           | f(x, y+1)| f(x+1, y+1)|
+|Gcross1| = |f(x+1, y+1)-f(x, y)|    -->[[0, -1], [1, 0]]               ^^^^^^^^^^^^^^^^^^^^^^^^^
+(ker1*ảnh gốc + ker2*ảnh gốc) + ảnh gốc  
+
+.Lọc đạo hàm bậc 1 - sobel 
+x --> [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]
+y --> [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]
+(ker1*ảnh gốc + ker2*ảnh gốc) + ảnh gốc 
+cv.Sobel(src=, out=, ddepth=(độ sâu ảnh sau lọc VD: CV_32F, CV_64F), x_oder, y_oder[, ksize, scale, delta, BORDER_DEFAUT]) 
+
+.Lọc đạo hàm bậc 2 - Laplacian
+L_chuan --> [[0, 1, 0], [1, -4, 1], [0, 1, 0]]
+ảnh gốc - L*ảnh gốc --> L --> [[0, -1, 0], [-1, 5, -1], [0, -1, 0]]
+biến thể 1: L_1 --> [[1, 1, 1], [1, -8, 1], [1, 1, 1]] phải lấy ảnh gốc trừ đi
+biến thể 2: L_2 --> [[0, -1, 0], [-1, 4, -1], [0, -1, 0]] phải lấy ảnh gốc trừ đi
+biến thể 1: L_3 --> [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]] phải lấy ảnh gốc trừ đi
+cv.Laplacian(src=, out=, ddepth=CV_64F)
+
+
+
+
+
+
+b, Miền tần số
+chuyển đổi từ miền không gian qua tần số bằng Fourier (dùng công thức Fourier hoặc cộng 2 hàm con) 
+b1: Chuyển ảnh đầu vào f(x, y) kích thước MxN thành fp(x, y) kích thước P=2Mx Q=2N (vùng không chứa ảnh mức xám = 0)
+b2: tạo Fp(x, y) = fp(x, y)*pow(-1, x+y) là ảnh đối xứng qua tâm (P/2, Q/2)
+b3: biến đổi fourier trên Fp(x, y) được F(u, v)
+b4: Tạo bộ lọc H(u, v) kích thước PxQ các phần tử đổi xứng qua tâm (P/2, Q/2)
+b5: nhân tứng phần tử F(u, v) với H(u, v) để được G(u, v)
+b6: biến đổi ngược Fourier trên G(u, v). Nhân từng phần tử của ma trận sau biến đổi với pow(-1, x+y) đợi gp(x, y) có tâm đối xứng (P/2, Q/2)
+b7: lấy vùng ảnh gp(x, y) kích thước MxN từ góc trên bên trái được ảnh g(x, y) sau lọc 
+I - Lọc 
++++lọc mịn ảnh (lọc thông thấp)
++ D0 là hằng số
++ D(u, v) là khoảng cách từ (u, v) đến trung tâm kernel kích thước MxN: D(u, v) = sqrt((u-M/2)**2 + (v-N/2)**2)
+
+.Lọc Ideal
+cắt bỏ thành phần tần số cao dựa vào khoảng cách D0
+H(u, v) = 1 if D(u, v) <= D0 and 0 if D(u, v) > D0
+
+.Lọc Butterworth
+H(u, v) =1/(1+pow(D(u,v)/D0, 2n) --> n bậc lọc 
+
+.Lọc Gaussian
+H(u, v) = pow(e, -D(u, v)**2/2D0**2)
+
++++Lọc sắc nét ảnh (lọc thông cao)
+Hhp(u, v) = 1-Hlp(u, v) nghịch đảo của thông thấp 
+
+code: 
+import numpy as np
+
+img = cv2.imread('img.jpg',0)
+
+dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+dft_shift = np.fft.fftshift(dft)
+
+rows, cols = img.shape
+crow,ccol = int(rows/2) , int(cols/2)
+
+# create a mask first, center square is 1, remaining all zeros
+mask = np.zeros((rows,cols,2),np.uint8)
+mask[crow-30:crow+30, ccol-30:ccol+30] = 1
+
+# apply mask and inverse DFT
+fshift = dft_shift*mask
+f_ishift = np.fft.ifftshift(fshift)
+img_back = cv2.idft(f_ishift)
+img_back = cv2.magnitude(img_back[:,:,0],img_back[:,:,1])
+
+
+
+
+
+
+
+c, Khôi phục ảnh
+I - Nhiễu
+g(x, y) = f(x, y) + nuy(x, y)
+g(x, y): ảnh thu được
+f(x, y): ảnh gốc
+nuy(x, y): nhiễu 
+. Nhiễu gaussian
+Hàm nhiễu theo hàm gaussian 
+. Nhiễu xung ảnh có điểm ảnh giá trị mức xám khác biệt lớn so với các điểm lân cận
+    - Xung nhiễu âm --> điểm ảnh đen --> nhiễu hạt tiêu
+    - Xung nhiễu dương --> điểm ảnh trắng --> Nhiễu muối 
+    - Cả 2 là nhiễu muỗi tiêu 
+. Nhiễu Rayleigh
+Hàm nhiễu lệch phải so với hảm gauss
+. Nhiễu Erlang(gammar)
+Hàm nhiễu 
+. Nhiễu hàm mũ 
+Hàm nhiễu 
+. Nhiễu đồng nhất
+Hàm giông xung vuông 
+II - Khôi phục 
++ Lọc trung bình 
+. Lọc trung bình số học
+Khôi phục điểm ảnh (x, y) trong vùng vuông Sxy kích thước mxn tâm (x, y) của ảnh bị nhiễu g, bằng cách lấy tổng điểm ảnh trong g tương ứng với cửa sổ vuông Sxy chia m.n: f'(x, y) = sum(g(s, t| s, t thuộc Sxy))/mn
+--> làm mịn, mờ ảnh để loại bỏ nhiễu
+. Lọc trung bình hình học 
+Giông như số học nhưng dùng công thức: f'(x, y) = (prod(g(s, t|s, t thuộc Sxy))) ^ (1/(mn))
+--> Giống như lọc trung bình số nhưng làm ít mất chi tiết ảnh hơn 
+. Lọc trung bình Harmonic 
+Giông như số học nhưng dùng công thức: f'(x, y) = m.n/(sum(1/g(s, t)))
+--> làm việc tốt với nhiễu muối và nhiễu gaussian, không tốt với nhiễu hạt tiêu
+. Lọc trung bình Contraharmonic
+công thức: f'(x, y) = sum(g(s, t))^(Q+1)/sum(g(s, t))^Q
+Q là bậc của bộ lọc; 
+Q>0 --> loại nhiễu hạt tiêu
+Q<0 --> loại nhiễu muối 
++ Lọc thống kê thứ tự 
+. Lọc trung vị --> loại nhiễu muối và hạt tiêu
+. Lọc Max --> loại bỏ nhiễu hạt tiêu
+. Lọc Min --> loại bỏ nhiễu muối  
+. Lọc midpoint (max + min)/2 --> loại bỏ nhiễu Gausian và nhiễu đồng nhất
+. Lọc Alpha Trimmed
+công thức: f'(x, y) = sum(gr(s, t))/(mn-d)
+gr(s, t) biểu diễn phần còn lại có (mn-d) pixels sau khi đã cắt bớt d/2 pixels có mức xám lớn nhất và d/2 pixel có mức xám bé nhất
+d = ksize^2 * alpha (0 < alpha < 0.5)
+--> loại nhiễu hỗn hợp, vd như kết hợp giữa nhiễu muối tiêu vào nhiễu gaussian
++ Lọc thích nghi
+. Lọc trung vị thích nghi
+Kích thước của sổ lọc sẽ thay đổi theo giá trị mức xám của pixel cần lọc và các pixel lân cận trong vùng
+--> nhiễu xung với mật độ xung không quá lớn và làm mịn đối với nhiễu không xung
+

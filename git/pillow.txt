@@ -1,0 +1,13 @@
+from PIL import Image
+Image.open('img.png') // đọc ảnh 
+.save() // lưu ảnh 
+.show() // hiển thị ảnh
+.crop(tuple(trái, trên, dưới, phải)) // cắt khung ảnh
+.transpose(Image.ROTATE_180) // 
+.resize(tuple(x, y)) // resize
+.rotate(int) // xoay theo nguoc chieu kim dong ho
+.convert('L') // chuyển về đen trắng phải trung gian RGB
+.chuyển về RGB
+ code: 
+    r, g, b = img.split()
+    changed_img = Image.merge('RGB', (r, b, g))

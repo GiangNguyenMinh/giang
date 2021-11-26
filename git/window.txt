@@ -1,0 +1,22 @@
+dir: hiển thị các file và thư mục trong thư mục hiện tai
+cls: clear
+cd: giống ubuntu
+copy<tên file nguồn><tên file đích>
+move<tên file nguồn><têm file đích>
+del<tên file><><>: xóa 1 hoặc nhiều file 
+rd <tên thư mục><><>: xóa 1 hoặc nhiều thư mục 
+md <tên thư mục><><>: tạo 1 hoặc nhiều thư mục
+type nul><tên file>, echo nul><tên file >: tạo file 
+help <câu lệnh>: giúp hiểu câu lệnh
+ipconfig: trả về thong tin mạng
+hostname: hiển thị tên mạng 
+ping <địa chỉ host>: kiểm tra kết nối mạng 
+shutdown -s -t[a]: tắt máy, a thời gian tính bằng giây 
+shutdown -r -t[a]: khởi động máy lại, a thời gian tính bằng giây 
+tasklist: hiển thị các tiến trình đang hoạt động, dùng taskkill dừng nó
+systeminfo: hiển thị thông tin hệ thống 
+chkdsk: kiểu tra ổ cứng 
+attrib: thay đổi thuộc tính file
+reg add/delete: thêm hoặc xóa trong registry (warning)
+color: đổi màu nền cmd 
+title: thay đổi tiêu đề cmd 

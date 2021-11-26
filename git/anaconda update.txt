@@ -1,0 +1,8 @@
+conda update conda
+conda update anaconda-navigator
+conda update navigator-updater
+
+*****certifi
+pip install --upgrade certifi
+conda install -c anaconda certifi
+ssl._create_default_https_context = ssl._create_unverified_context

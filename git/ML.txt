@@ -1,0 +1,96 @@
+*****************panda**********************
+scatter_matrix([list_attribute], ...) //pandas.plotting 
+
+.head(number) //show number rows
+.shape() //number of rows and cols
+.info() //show number in each col and dtype of them 
+.columns //return name of all cols
+.discribe() //show mean, count, std , min, max,...
+.corr(), sort_values(ascending=False or True) //compute corr and sort
+.apply(lambda_func) --> .replace('old', 'new') // conver some type of data
+df['new_col'] = // insert new column with name 'new_col'
+.groupby('a')['b'] // creat groud with a and b vs value of b, sometime using with .sum()
+.sort_values(ascending=True) // sort form lower to higher,wheares if ascending=False 
+.name_col.value_counts() // sum of number each object in name_col
+.name_col.nunique() // how many different object in name_col
+
+missing data
+.drop('', axis=)
+.dropna()
+.fillna()
+
+.iloc(<row_number>, <col_number>)
+.loc(<cotrain_label_row>, <contrain_lable_col>)
+.ix(if pass number that like iloc, else if label that like loc)
+
+
+*****************matplotlib*****************
+### matplotlib inline (jupyter)
+.bar()
+.barh()
+.hist(bins, *awrg) show hist bar
+.plot(kind=, x= ,y=, alpha=,
+	(option), cmap=  )
+
+
+
+
+*****************sklearn********************
+***preprocessing data
+train_test_split() (sklearn.model_selection) //split data
+StratifiedShuffleSplit() (sklearn.model_selection) // stratified data 
+
+== fit(data(or two paramester with supervised learning)); transform(dataset) 'sometime fit_transform()'; predict(); score()//quality; underscore_ show learning 
+paramester; ==
+get_params(), set_params() (sklearn.base.BaseEstimator) // supply get and set method
+fit, transform, fit_transform (sklearn.base.TransformerMixin)  // supply fit, transform, fit_transform method
+
+SimpleImputer(missing_values=np.nan, strategy='') --> object.fit(data) --> object.transform(data) --> learning paramester object.statistics_ (sklearn.impute)// missing data handle 
+OrdinalEncoder() --> fit, tranform or fit_tranform(data) --> learning paramester object.categories_ (sklearn.preprocessing) // handle text with int from 0 to ...
+OneHotEncoderIO() --> fit, tranform of fit_tranform(data) --> learning paramester object.categories_ 'toarray because SciPy sparse matrix' (sklearn.preprocessing) // handle text with on hot coding 
+LabelEncoder() --> fit, tranform of fit_tranform(data) (sklearn.preprocessing) // bool encode yes to 1, no to 0
+StandardScaler() (sklearn.preprocessing) // standeardlization 
+MinMaxScaler(feature_range=(min, max)) (sklearn.preprocessing) // Nomalization
+
+***prepare data for trainning 
+Pipeline([('name1', transform1), ('name2', transform2),...]) // like tochvison.transform.compose()
+ColumnTransformer([('name_numberial tran', transform(ex_pipeline), list_col_num), ('name_object tra', transform(ex_onehotencoder), list_col_obj)]) (sklearn.compose)
+// tranform in col of dataset, 
+//parameter sparse_threshold supply if data mix sparse and dense matrix and density(ratio no-zero cells) lower than this parameter --> return sparse matrix
+//parameter remainder is 'drop' will drop all col no list, wheares 'passthrough' keep them untouch   
+                      
+***select modul 
+LinearRegression() --> fit(train_data, label) --> predict(test_data) (sklearn.linear_model) // linear regression modul 
+DecisionTreeRegressor() --> fit(train_data, lable) --> predict(test_data) (sklearn.tree) // Decision tree regression modul 
+RandomForestRegressor() --> fit(train_data, lable) --> predict(test_data) (sklearn.ensemble) // Random Forest regression modul 
+
+***lost 
+mean_squared_error(a, b) (sklearn.metrics) // RMSE(a, b) mean square error --> then sqrt()
+//scoring: https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules
+
+*** train modul with validate data
+cross_val_score(module_select, data_train, label, scoring='', cv=) (sklearn.model_selection) 
+//train cv time use cv-1 fold of data_train to train and 1 fold to validate
+//cv: number of fold
+//scoring: https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules
+
+*** Fine-Tune Your Model
+GridSearchCV(model, param_grid, cv=, scoring=, return_train_score=True, refit=True(defaut)) --> object.best_params_ to see best hyperparam adjust
+                                                                    --> object.best_estimator_ to see best modul and all hyperparam ## using this likely a best modul for test
+                                                                        --> object.cv_result_ contains 'mean_test_score' and 'params' using for and zip() to print() this
+ (sklearn.model_selection)
+ // give hyperparameter we want in pram_grid (list of dict), this evaluate using cross-validation
+RandomizedSearchCV(like GridSearchCV, n_iter=) but  evaluates a given number of random combinations by selecting a random value for each hyperparameter at every iteration specify by n_iter
+
+*** Run in test set
+best_modul = Fine-tune.best_estimator_ --> test likely train using transform not fit_transform
+ 
+
+
+
+*** save and load module 
+joblib.dump(model, 'name.pkl'), joblib.load('name.pkl') (sklearn.externals) // save and load model 
+
+
+
+
