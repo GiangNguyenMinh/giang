@@ -45,8 +45,8 @@ def main(args):
     train_model(dataLoader, money_model, criterion, optimizer, args.n_epochs, dataset_sizes)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='train money model')
-    parser.add_argument('--lr', type=int, default=0.0001)
-    parser.add_argument('--batch-size', type=int, default=64)
+    parser.add_argument('--lr', type=float, default=0.0001)
+    parser.add_argument('--batch-size', type=int, default=2)
     parser.add_argument('--n-epochs', type=int, default=50)
     args = parser.parse_args()
     main(args)

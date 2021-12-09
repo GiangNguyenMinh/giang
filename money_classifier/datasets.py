@@ -54,8 +54,10 @@ class ImageTransform():
 
 class TargetsTransform():
     def __call__(self, target):
-        target = torch.zeros(5, dtype=torch.float).scatter_(dim=0, index=torch.tensor(target), value=1)
-        return target
+        """
+        TODO
+        """
+        pass
 
 class MyDataset(Dataset):
     """
@@ -89,7 +91,7 @@ class MyDataset(Dataset):
             target = 2
         elif target == '20000':
             target = 3
-        else:
+        elif target == '50000':
             target = 4
 
         if self.transform:
