@@ -11,6 +11,13 @@ if not os.path.exists(link):
 if not os.path.exists(os.path.join(link, lable)):
     os.mkdir(os.path.join(link, lable))
 
+def Gamma(img):
+    if np.random.randint(2):
+        gamma = np.random.uniform(0.7, 1.2)
+        img = pow(img, float(gamma))
+    return img
+
+
 cap = cv.VideoCapture(0)
 i = 1
 while 1:
@@ -23,6 +30,7 @@ while 1:
     if i > 60 and i <= 1060:
         print('cap count:', i-60)
         frame = cv.resize(frame, dsize=(224, 224))
+        frame = Gamma(frame)
         cv.imwrite(os.path.join(link, lable, '{}.png'.format(i-60)), frame)
     if cv.waitKey(1) & 0xFF == ord('q'):
         break

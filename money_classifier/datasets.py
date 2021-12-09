@@ -26,7 +26,7 @@ class ImageTransform():
         self.data_transform = {
             'train': transforms.Compose(
                 [
-                    transforms.RandomPerspective(distortion_scale=0.6, p=0.4),
+                    # transforms.RandomPerspective(distortion_scale=0.6, p=0.4),
                     transforms.RandomHorizontalFlip(0.3),
                     transforms.RandomVerticalFlip(0.3),
                     transforms.ToTensor(),

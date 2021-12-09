@@ -32,14 +32,15 @@ def main(args):
     mean = (0.485, 0.456, 0.406)
     std = (0.229, 0.224, 0.225)
 
-    train_dataset = MyDataset(train_path, transform=ImageTransform(size, mean, std), target_transform=TargetsTransform(), phase='train')
-    val_dataset = MyDataset(val_path, transform=ImageTransform(size, mean, std), target_transform=TargetsTransform(), phase='val')
+    train_dataset = MyDataset(train_path, transform=ImageTransform(size, mean, std), phase='train')
+    val_dataset = MyDataset(val_path, transform=ImageTransform(size, mean, std), phase='val')
 
     trainLoader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
     valLoader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
-    dataset_sizes = {'train': len(train_dataset), 'val': len(val_dataset)}
     dataLoader = {'train': trainLoader, 'val': valLoader}
+    dataset_sizes = {'train': len(train_dataset)//args.batch_size,
+                     'val': len(val_dataset)//args.batch_size}
 
     # train_model
     train_model(dataLoader, money_model, criterion, optimizer, args.n_epochs, dataset_sizes)
