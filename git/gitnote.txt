@@ -1,0 +1,7 @@
+git branch: xem cac branch
+git checkout -b name_branch: tao branch moi --> git checkout main: tro lai main
+git pull: update sever to local 
+git restore --staged file_name: dua staged tro lai
+git log: xem trang thai commit
+git merge name_branch: du commit tren branch vao trong main
+git checkout Id_commit: tro ve trang thai luc commit
