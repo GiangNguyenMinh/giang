@@ -12,7 +12,7 @@ def Gamma(img):
         gamma = np.random.uniform(0.7, 1.2)
         img = pow(img, float(gamma))
     return img
-def main():
+def main_run():
     lable = args.value
     link = './data/'
     if not os.path.exists(link):
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='make data for money classifier')
     parser.add_argument('--value', type=str, default=0000, help='modify in [0000, 1000, 5000, 20000, 50000]')
     args = parser.parse_args()
-    main()
+    main_run()

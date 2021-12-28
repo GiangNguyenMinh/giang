@@ -2,9 +2,27 @@
 # VietNamese Money Classifier
 
 ## Install 
-#### Requirement
-[python>=3.8](https://www.python.org/) is required with [torch](https://pytorch.org/)
-#### Setup
+#### Environment
+[anaconda-environment](https://www.anaconda.com/products/individual) with python>=3.8
+
+
+[torch](https://pytorch.org/)
+
+
+Activate anaconda-environment then
+
+
+Install opencv: 
+```bash
+pip install opencv-python
+```
+
+
+Install sklearn: 
+```bash
+pip3 install -U scikit-learn
+```
+#### Setup 
 ```bash
 $ git clone https://github.com/GiangNguyenMinh/giang.git
 $ cd giang/money_classifier
