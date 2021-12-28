@@ -1,0 +1,12 @@
+conda config --set auto_activate_base false
+conda env list 
+conda activate base
+conda deactivate
+conda create -n p38 python=3.8
+
+*************open pdf **************
+
+evince file_name.pdf 
+alt f2 --> killall <progam_name>
+cat > file_name.text -> ctrl D
+

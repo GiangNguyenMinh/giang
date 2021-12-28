@@ -38,13 +38,16 @@ $ python MakeData.py --value 0000
 ```
 ## Training
 ```bash
-$ python train.py --lr 0.0001 --batch-size 32 --n-epochs 100
+$ python train.py --use-weights --lr 0.0001 --batch-size 32 --n-epochs 100 --n-worker 16
 ```
 
 ## Inference
 ```bash
-$ predict.py
+$ predict.py --thread-hold 0.6
 ```
 
 ## Train colab
+#### From scratch
 Colab code [click here](https://colab.research.google.com/drive/15aTHA5HJFVxIv1HLv3zdQu1sqbvCsa3b?usp=sharing)
+#### With weight pretrain
+Colab code [click here](https://colab.research.google.com/drive/1p3PH9AuupS4HRhVIDpc_hGSiZg6L3T6K?usp=sharing)

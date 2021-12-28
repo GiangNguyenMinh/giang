@@ -10,6 +10,13 @@ def main(args):
     # create model
     money_model = model()
 
+    # pretrain weight
+    if args.use_weights:
+        print('Using weight pretrain to init model')
+        print('--' * 20)
+        money_weight = torch.load(args.weights)
+        money_model.load_state_dict(money_weight)
+
     # setup loss_fn and optimization_fn
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(money_model.parameters(), lr=args.lr, momentum=0.9)
@@ -35,8 +42,8 @@ def main(args):
     train_dataset = MyDataset(train_path, transform=ImageTransform(size, mean, std), phase='train')
     val_dataset = MyDataset(val_path, transform=ImageTransform(size, mean, std), phase='val')
 
-    trainLoader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
-    valLoader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
+    trainLoader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.n_workers)
+    valLoader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=args.n_workers)
 
     dataLoader = {'train': trainLoader, 'val': valLoader}
     dataset_sizes = {'train': len(train_dataset)//args.batch_size,
@@ -46,8 +53,11 @@ def main(args):
     train_model(dataLoader, money_model, criterion, optimizer, args.n_epochs, dataset_sizes)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='train money model')
+    parser.add_argument('--use-weights', action='store_true', help='check use weights')
+    parser.add_argument('--weights', type=str, default='money_weight.pth')
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--batch-size', type=int, default=2)
     parser.add_argument('--n-epochs', type=int, default=50)
+    parser.add_argument('--n-workers', type=int, default=1)
     args = parser.parse_args()
     main(args)

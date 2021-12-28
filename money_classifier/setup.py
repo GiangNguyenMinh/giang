@@ -74,8 +74,8 @@ def train_model(dataloader, model, criterion, optimizer, n_epochs, dataset_size)
                     loss = criterion(outputs, targets)
 
                     if phase == 'train':
-                        loss.backward()
-                        optimizer.step()
+                        loss.backward() #tinh gradient cua cac weight
+                        optimizer.step() #update cac weight the gradient decent
 
                     if iteration % 10 == 0:
                         iter_end = time.time()

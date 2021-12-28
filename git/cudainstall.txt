@@ -1,0 +1,23 @@
+sudo apt-get install -f 
+sudo dpkg --configure -a 
+sudo dpkg --list
+sudo apt-get purge <package name>
+sudo apt-get install aptitude 
+sudo aptitude istall <packeg name>
+
+#
+dpkg -l | grep -i <name>
+
+#remove cuda toolkit
+sudo apt-get --purge remove "*cublas*" "cuda*" "nsight*" 
+#remove cuda driver
+sudo apt-get --purge remove "*nvidia*"
+
+#install
+sudo wget -O /etc/apt/preferences.d/cuda-repository-pin-600 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+sudo add-apt-repository "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+sudo apt update
+sudo apt install cuda
+echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
+
