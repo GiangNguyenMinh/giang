@@ -47,4 +47,4 @@ $ predict.py
 ```
 
 ## Train colab
-Colab code [click here](https://colab.research.google.com/drive/15aTHA5HJFVxIv1HLv3zdQu1sqbvCsa3b)
+Colab code [click here](https://colab.research.google.com/drive/15aTHA5HJFVxIv1HLv3zdQu1sqbvCsa3b?usp=sharing)
